@@ -1,2 +1,4 @@
-credentials.json
 venv/
+marvel-credentials.json
+google-service-account.json
+*.pyc

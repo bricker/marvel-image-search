@@ -1,32 +1,21 @@
 class URL:
     def __init__(self, data):
-        self.type = data["type"]
-        self.url = data["url"]
+        self.type = data.get("type")
+        self.url = data.get("url")
 
 
 class TextObject:
     def __init__(self, data):
-        self.type = data["type"]
-        self.language = data["language"]
-        self.text = data["text"]
+        self.type = data.get("type")
+        self.language = data.get("language")
+        self.text = data.get("text")
 
 
 class SummaryView:
     def __init__(self, data):
-        self.resourceUri = data["resourceURI"]
-        self.name = data["name"]
-
-
-class SeriesSummary(SummaryView):
-    pass
-
-
-class ComicSummary(SummaryView):
-    pass
-
-
-class EventSummary(SummaryView):
-    pass
+        if data:
+            self.resourceUri = data.get("resourceURI")
+            self.name = data.get("name")
 
 
 class ComicDate:
@@ -43,17 +32,17 @@ class ComicPrice:
 
 class ResourceList:
     def __init__(self, data, klass):
-        self.available = data["available"]
-        self.returned = data["returned"]
-        self.collectionUri = data["collectionURI"]
-        self.items = [klass(json) for json in data["items"]]
+        self.available = data.get("available")
+        self.returned = data.get("returned")
+        self.collectionUri = data.get("collectionURI")
+        self.items = [klass(json) for json in data.get("items", {})]
 
 
 class Image:
     # https://developer.marvel.com/documentation/images
     def __init__(self, data):
-        self.path = data["path"]
-        self.extension = data["extension"]
+        self.path = data.get("path")
+        self.extension = data.get("extension")
 
     def fullPath(self, variant):
         if variant == "full-size":
@@ -64,123 +53,123 @@ class Image:
 
 class Comic:
     def __init__(self, data):
-        self.id = data["id"]
-        self.digitalId = data["digitalId"]
-        self.title = data["title"]
-        self.issueNumber = data["issueNumber"]
-        self.variantDescription = data["variantDescription"]
-        self.description = data["description"]
-        self.modified = data["modified"]
-        self.isbn = data["isbn"]
-        self.upc = data["upc"]
-        self.diamondCode = data["diamondCode"]
-        self.ean = data["ean"]
-        self.issn = data["issn"]
-        self.format = data["format"]
-        self.pageCount = data["pageCount"]
-        self.textObjects = [TextObject(json) for json in data["textObjects"]]
-        self.resourceUri = data["resourceUri"]
-        self.urls = [URL(json) for json in data["urls"]]
-        self.series = SeriesSummary(data["series"])
-        self.variants = [ComicSummary(json) for json in data["variants"]]
-        self.collections = [ComicSummary(json) for json in data["collections"]]
-        self.collectedIssues = [ComicSummary(json) for json in data["collectedIssues"]]
-        self.dates = [ComicDate(json) for json in data["dates"]]
-        self.prices = [ComicPrice(json) for json in data["prices"]]
-        self.thumbnail = Image(data["thumbnail"])
-        self.images = [Image(json) for json in data["images"]]
-        self.creators = ResourceList(data["creators"], Creator)
-        self.characters = ResourceList(data["characters"], Character)
-        self.stories = ResourceList(data["stories"], Story)
-        self.events = ResourceList(data["events"], Event)
+        self.id = data.get("id")
+        self.digitalId = data.get("digitalId")
+        self.title = data.get("title")
+        self.issueNumber = data.get("issueNumber")
+        self.variantDescription = data.get("variantDescription")
+        self.description = data.get("description")
+        self.modified = data.get("modified")
+        self.isbn = data.get("isbn")
+        self.upc = data.get("upc")
+        self.diamondCode = data.get("diamondCode")
+        self.ean = data.get("ean")
+        self.issn = data.get("issn")
+        self.format = data.get("format")
+        self.pageCount = data.get("pageCount")
+        self.textObjects = [TextObject(json) for json in data.get("textObjects", {})]
+        self.resourceUri = data.get("resourceUri")
+        self.urls = [URL(json) for json in data.get("urls", {})]
+        self.series = SummaryView(data.get("series", {}))
+        self.variants = [SummaryView(json) for json in data.get("variants", {})]
+        self.collections = [SummaryView(json) for json in data.get("collections", {})]
+        self.collectedIssues = [SummaryView(json) for json in data.get("collectedIssues", {})]
+        self.dates = [ComicDate(json) for json in data.get("dates", {})]
+        self.prices = [ComicPrice(json) for json in data.get("prices", {})]
+        self.thumbnail = Image(data.get("thumbnail", {}))
+        self.images = [Image(json) for json in data.get("images", {})]
+        self.creators = ResourceList(data.get("creators", {}), Creator)
+        self.characters = ResourceList(data.get("characters", {}), Character)
+        self.stories = ResourceList(data.get("stories", {}), Story)
+        self.events = ResourceList(data.get("events", {}), Event)
 
 
 class Series:
     def __init__(self, data):
-        self.id = data["id"]
-        self.title = data["title"]
-        self.description = data["description"]
-        self.resourceUri = data["resourceURI"]
-        self.urls = [URL(json) for json in data["urls"]]
-        self.startYear = data["startYear"]
-        self.endYear = data["endYear"]
-        self.rating = data["rating"]
-        self.modified = data["modified"]
-        self.thumbnail = Image(data["thumbnail"])
-        self.comics = ResourceList(data["comics"], Comic)
-        self.stories = ResourceList(data["stories"], Story)
-        self.events = ResourceList(data["events"], Event)
-        self.characters = ResourceList(data["characters"], Character)
-        self.creators = ResourceList(data["creators"], Creator)
-        self.next = SeriesSummary(data["next"])
-        self.prev = SeriesSummary(data["prev"])
+        self.id = data.get("id")
+        self.title = data.get("title")
+        self.description = data.get("description")
+        self.resourceUri = data.get("resourceURI")
+        self.urls = [URL(json) for json in data.get("urls", {})]
+        self.startYear = data.get("startYear")
+        self.endYear = data.get("endYear")
+        self.rating = data.get("rating")
+        self.modified = data.get("modified")
+        self.thumbnail = Image(data.get("thumbnail", {}))
+        self.comics = ResourceList(data.get("comics", {}), Comic)
+        self.stories = ResourceList(data.get("stories", {}), Story)
+        self.events = ResourceList(data.get("events", {}), Event)
+        self.characters = ResourceList(data.get("characters", {}), Character)
+        self.creators = ResourceList(data.get("creators", {}), Creator)
+        self.next = SummaryView(data.get("next", {}))
+        self.prev = SummaryView(data.get("prev", {}))
 
 
 class Event:
     def __init__(self, data):
-        self.id = data["id"]
-        self.title = data["title"]
-        self.description = data["description"]
-        self.resourceUri = data["resourceURI"]
-        self.urls = [URL(json) for json in data["urls"]]
-        self.modified = data["modified"]
-        self.start = data["start"]
-        self.end = data["end"]
-        self.thumbnail = Image(data["thumbnail"])
-        self.comics = ResourceList(data["comics"], Comic)
-        self.stories = ResourceList(data["stories"], Story)
-        self.series = ResourceList(data["series"], Series)
-        self.characters = ResourceList(data["characters"], Character)
-        self.creators = ResourceList(data["creators"], Creator)
-        self.next = EventSummary(data["next"])
-        self.prev = EventSummary(data["prev"])
+        self.id = data.get("id")
+        self.title = data.get("title")
+        self.description = data.get("description")
+        self.resourceUri = data.get("resourceURI")
+        self.urls = [URL(json) for json in data.get("urls", {})]
+        self.modified = data.get("modified")
+        self.start = data.get("start")
+        self.end = data.get("end")
+        self.thumbnail = Image(data.get("thumbnail", {}))
+        self.comics = ResourceList(data.get("comics", {}), Comic)
+        self.stories = ResourceList(data.get("stories", {}), Story)
+        self.series = ResourceList(data.get("series", {}), Series)
+        self.characters = ResourceList(data.get("characters", {}), Character)
+        self.creators = ResourceList(data.get("creators", {}), Creator)
+        self.next = SummaryView(data.get("next", {}))
+        self.prev = SummaryView(data.get("prev", {}))
 
 
 class Story:
     def __init__(self, data):
-        self.id = data["id"]
-        self.title = data["title"]
-        self.description = data["description"]
-        self.resourceUri = data["resourceURI"]
-        self.type = data["type"]
-        self.modified = data["modified"]
-        self.thumbnail = Image(data["thumbnail"])
-        self.comics = ResourceList(data["comics"], Comic)
-        self.series = ResourceList(data["series"], Series)
-        self.events = ResourceList(data["events"], Event)
-        self.characters = ResourceList(data["characters"], Character)
-        self.creators = ResourceList(data["creators"], Creator)
-        self.originalissue = ComicSummary(data["originalissue"])
+        self.id = data.get("id")
+        self.title = data.get("title")
+        self.description = data.get("description")
+        self.resourceUri = data.get("resourceURI")
+        self.type = data.get("type")
+        self.modified = data.get("modified")
+        self.thumbnail = Image(data.get("thumbnail", {}))
+        self.comics = ResourceList(data.get("comics", {}), Comic)
+        self.series = ResourceList(data.get("series", {}), Series)
+        self.events = ResourceList(data.get("events", {}), Event)
+        self.characters = ResourceList(data.get("characters", {}), Character)
+        self.creators = ResourceList(data.get("creators", {}), Creator)
+        self.originalissue = SummaryView(data.get("originalissue", {}))
 
 
 class Creator:
     def __init__(self, data):
-        self.id = data["id"]
-        self.firstName = data["firstName"]
-        self.middleName = data["middleName"]
-        self.lastName = data["lastName"]
-        self.suffix = data["suffix"]
-        self.fullName = data["fullName"]
-        self.modified = data["modified"]
-        self.resourceUri = data["resourceURI"]
-        self.urls = [URL(json) for json in data["urls"]]
-        self.thumbnail = Image(data["thumbnail"])
-        self.series = ResourceList(data["series"], Series)
-        self.stories = ResourceList(data["stories"], Story)
-        self.comics = ResourceList(data["comics"], Comic)
-        self.events = ResourceList(data["events"], Event)
+        self.id = data.get("id")
+        self.firstName = data.get("firstName")
+        self.middleName = data.get("middleName")
+        self.lastName = data.get("lastName")
+        self.suffix = data.get("suffix")
+        self.fullName = data.get("fullName")
+        self.modified = data.get("modified")
+        self.resourceUri = data.get("resourceURI")
+        self.urls = [URL(json) for json in data.get("urls", {})]
+        self.thumbnail = Image(data.get("thumbnail", {}))
+        self.series = ResourceList(data.get("series", {}), Series)
+        self.stories = ResourceList(data.get("stories", {}), Story)
+        self.comics = ResourceList(data.get("comics", {}), Comic)
+        self.events = ResourceList(data.get("events", {}), Event)
 
 
 class Character:
     def __init__(self, data):
-        self.id = data["id"]
-        self.name = data["name"]
-        self.description = data["description"]
-        self.modified = data["modified"]
-        self.resourceUri = data["resourceURI"]
-        self.urls = [URL(url_json) for url_json in data["urls"]]
-        self.thumbnail = data["thumbnail"]
-        self.comics = [Comic(json) for json in data["comics"]]
-        self.stories = [Story(json) for json in data["stories"]]
-        self.events = [Event(json) for json in data["events"]]
-        self.series = [Series(json) for json in data["series"]]
+        self.id = data.get("id")
+        self.name = data.get("name")
+        self.description = data.get("description")
+        self.modified = data.get("modified")
+        self.resourceUri = data.get("resourceURI")
+        self.urls = [URL(url_json) for url_json in data.get("urls", {})]
+        self.thumbnail = data.get("thumbnail")
+        self.comics = [Comic(json) for json in data.get("comics", {})]
+        self.stories = [Story(json) for json in data.get("stories", {})]
+        self.events = [Event(json) for json in data.get("events", {})]
+        self.series = [Series(json) for json in data.get("series", {})]
