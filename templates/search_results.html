@@ -2,9 +2,9 @@
 <html>
   <body>
     <div class="search-results">
-      <li>
-        {{ images }}
-      </li>
+      {% for image in images %}
+        <img src="{{ image }}">
+      {% endfor %}
     </div>
   </body>
 </html>
