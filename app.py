@@ -1,5 +1,6 @@
 import json
 from flask import Flask
+from flask.ext.jsonpify import jsonify
 from flask import render_template
 from flask import request
 from flask import json
@@ -7,7 +8,7 @@ from elasticsearch import Elasticsearch
 
 MarvelImageRecognition = Flask(__name__)
 
-es = Elasticsearch("http://10.19.189.64:9200")
+es = Elasticsearch("http://10.21.154.54:9200")
 
 @MarvelImageRecognition.route('/',  methods=['GET'])
 def home():
@@ -20,21 +21,15 @@ def process_results():
   body = {
     'query': {
       'match': {
-        'objects': 'gun'
+        'objects': query_object
       }
     }
   }
 
   res = es.search(index="marvel", body=body)
 
-  print(res)
-
   images = {}
-
   for index, hit in enumerate(res['hits']['hits']):
     images[index] = hit["_source"]["url"]
 
-  # print '***********************'
-  # print images
-
-  return json.dumps({'status': 'OK'})
+  return jsonify(images)
