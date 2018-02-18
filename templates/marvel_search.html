@@ -1,9 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
+  <head>
+  </head>
+
   <body>
-    <form action="/search-results" method="post">
-      <input type="search" name="marvel-query" placeholder="Search Marvel" class="marvel-search"></input>
-      <input type="submit" class="search-btn"></input>
-    </form>
+    <input id="search-input" name="marvel-query" type="search" placeholder="Search Marvel"></input>
+    <button id="search-btn">Search</button>
+
+    <div class="search-results">
+    </div>
   </body>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../static/js/script.js"></script>  
 </html>
