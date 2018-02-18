@@ -16,4 +16,4 @@ class CharactersListRequest:
         self.parameters = parameters
 
     def run(self):
-
+        pass
