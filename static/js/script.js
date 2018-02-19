@@ -6,8 +6,10 @@
       data: { 'q': data },
       type: 'GET'
     }).done(function(res) {
+      var $results = $('#search-results');
+      $results.empty().hide();
       _.each(res, function(image) {
-        $('#search-results').append('<img class="marvel-image" src=' + image + '>').slideDown("slow");
+        $results.append('<img class="marvel-image" src=' + image + '>').slideDown("slow");
       })
     });
   })
