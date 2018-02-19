@@ -9,8 +9,9 @@
       var $results = $('#search-results');
       $results.empty().hide();
       _.each(res, function(image) {
-        $results.append('<img class="marvel-image" src=' + image + '>').slideDown("slow");
+        $results.append('<img class="marvel-image" src=' + image + '>');
       })
+      $results.slideDown("slow");
     });
   })
 })();
