@@ -1,6 +1,6 @@
 # Marvel Image Search
 
-A deep search engine for images provided by Marvel's API (developer.marvel.com).
+A deep search engine for images provided by Marvel's API (https://developer.marvel.com).
 
 Software:
 
@@ -8,4 +8,4 @@ Software:
 * ElasticSearch
 * Flask
 
-Created by [Bryan Ricker](github.com/bricker) and [Leilenah Mamea](github.com/leilenah).
+Created by [Bryan Ricker](https://github.com/bricker) and [Leilenah Mamea](https://github.com/leilenah).
