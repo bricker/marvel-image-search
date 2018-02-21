@@ -8,4 +8,4 @@ Software:
 * ElasticSearch
 * Flask
 
-Created by Bryan Ricker and Leilenah Mamea.
+Created by [Bryan Ricker](github.com/bricker) and [Leilenah Mamea](github.com/leilenah).
